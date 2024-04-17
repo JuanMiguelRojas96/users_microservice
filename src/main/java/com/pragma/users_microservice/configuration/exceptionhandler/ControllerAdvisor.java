@@ -1,6 +1,8 @@
 package com.pragma.users_microservice.configuration.exceptionhandler;
 
+import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.NoDataFoundException;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.RoleAlreadyExistsException;
+import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.UserAlreadyExistsException;
 import com.pragma.users_microservice.configuration.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class ControllerAdvisor {
 
-  private String getErrorMessage(FieldError error, String errorField) {
+  private String getErrorMessage(FieldError error) {
     if (error == null) {
       return "Validation error";
     }
@@ -25,6 +27,8 @@ public class ControllerAdvisor {
     String code = error.getCode();
 
     if (code != null && code.equals("NotBlank")) {
+      return Constants.EMPTY_FIELD_EXCEPTION_MESSAGE;
+    } else if (code != null && code.equals("NotNull")) {
       return Constants.EMPTY_FIELD_EXCEPTION_MESSAGE;
     } else if (code != null && code.equals("Size")) {
       return Constants.MAX_CHAR_EXCEPTION_MESSAGE;
@@ -42,8 +46,7 @@ public class ControllerAdvisor {
       FieldError error = result.getFieldError();
 
       if (error != null) {
-        String errorField = error.getField();
-        String errorMessage = getErrorMessage(error, errorField);
+        String errorMessage = getErrorMessage(error);
 
         return ResponseEntity.badRequest().body(new ExceptionResponse(
             errorMessage, HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
@@ -57,6 +60,19 @@ public class ControllerAdvisor {
     return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
         String.format(Constants.ROLE_ALREADY_EXISTS_EXCEPTION_MESSAGE, ex.getMessage()),
         HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
+  }
+
+  @ExceptionHandler(UserAlreadyExistsException.class)
+  public ResponseEntity<ExceptionResponse> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
+        String.format(Constants.USER_ALREADY_EXISTS_EXCEPTION_MESSAGE, ex.getMessage()),
+        HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
+  }
+
+  @ExceptionHandler(NoDataFoundException.class)
+  public ResponseEntity<ExceptionResponse> handleNoDataFoundException() {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
+        Constants.NO_DATA_FOUND_EXCEPTION_MESSAGE, HttpStatus.NOT_FOUND.toString(), LocalDateTime.now()));
   }
 
 
