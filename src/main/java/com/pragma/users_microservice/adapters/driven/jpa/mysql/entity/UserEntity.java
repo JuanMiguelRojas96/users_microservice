@@ -29,16 +29,16 @@ public class UserEntity {
   private String phoneNumber;
   @Column(unique = true)
   private String email;
-  @Column(length = 20)
+  @Column(length = 90)
   private String password;
   @Column(name = "is_Enabled")
-  private boolean enabled;
+  private boolean enabled = true;
   @Column(name = "account_Non_Expired")
-  private boolean accountNonExpired;
+  private boolean accountNonExpired = true;
   @Column(name = "account_Non_Locked")
-  private boolean accountNonLocked;
+  private boolean accountNonLocked = true;
   @Column(name = "credentials_Non_Expired")
-  private boolean credentialsNonExpired;
+  private boolean credentialsNonExpired = true;
 
   @ManyToOne
   @JoinColumn(name = "role_id")

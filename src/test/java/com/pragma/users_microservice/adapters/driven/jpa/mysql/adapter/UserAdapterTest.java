@@ -62,7 +62,7 @@ class UserAdapterTest {
         new Role(1L, "admin", "admin"));
 
     UserEntity userEntity = new UserEntity(1L,"admin", "admin",
-        "admin", "admin","admin","admin",
+        "admin", "admin","admin","admin",true,true,true,true,
         new RoleEntity(1L, "admin", "admin"));
 
     when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(userEntity));

@@ -23,21 +23,10 @@ public class UserRestControllerAdapter {
   private final IUserRequestMapper userRequestMapper;
 
   @PostMapping("/")
+  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   public ResponseEntity<Void> addUser(@Valid @RequestBody AddUserRequest request) {
     userServicePort.saveUser(userRequestMapper.addRequestToUser(request));
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
-
-  @GetMapping("/hello")
-  @PreAuthorize("permitAll()")
-  public String hello() {
-    return "hello";
-  }
-  @GetMapping("/hello-secured")
-  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-  public String helloSecured() {
-    return "hello-secured";
-  }
-
 
 }

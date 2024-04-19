@@ -8,10 +8,12 @@ import com.pragma.users_microservice.adapters.driven.jpa.mysql.repository.IUserR
 import com.pragma.users_microservice.domain.model.User;
 import com.pragma.users_microservice.domain.spi.IUserPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 public class UserAdapter implements IUserPersistencePort {
 
+  private final PasswordEncoder passwordEncoder;
   private final IUserRepository userRepository;
   private final IRoleRepository roleRepository;
   private final IUserEntityMapper userEntityMapper;
@@ -29,6 +31,7 @@ public class UserAdapter implements IUserPersistencePort {
     }
 
     user.setEmail(normalizedEmail);
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(userEntityMapper.toEntity(user));
 
   }
