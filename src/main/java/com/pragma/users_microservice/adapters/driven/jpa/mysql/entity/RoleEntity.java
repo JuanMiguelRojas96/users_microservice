@@ -19,7 +19,8 @@ public class RoleEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Column(length = 20)
+
+  @Column(unique = true,length = 20)
   private String name;
   @Column(length = 90)
   private String description;

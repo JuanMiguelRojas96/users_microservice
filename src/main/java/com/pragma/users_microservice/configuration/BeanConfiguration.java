@@ -15,12 +15,13 @@ import com.pragma.users_microservice.domain.spi.IUserPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
 public class BeanConfiguration {
 
-
+  private final PasswordEncoder passwordEncoder;
   private final IRoleRepository roleRepository;
   private final IRoleEntityMapper roleEntityMapper;
   private final IUserRepository userRepository;
@@ -38,7 +39,7 @@ public class BeanConfiguration {
 
   @Bean
   public IUserPersistencePort userPersistencePort() {
-    return new UserAdapter(userRepository,roleRepository, userEntityMapper);
+    return new UserAdapter(passwordEncoder,userRepository,roleRepository, userEntityMapper);
   }
   @Bean
   public IUserServicePort userServicePort() {
