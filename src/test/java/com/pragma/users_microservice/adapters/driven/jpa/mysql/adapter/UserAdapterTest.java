@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -21,6 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UserAdapterTest {
+
+  @Mock
+  private PasswordEncoder passwordEncoder;
 
   @Mock
   private IUserRepository userRepository;
@@ -48,10 +52,15 @@ class UserAdapterTest {
     when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
     when(roleRepository.findById(user.getRole().getId())).thenReturn(Optional.of(new RoleEntity()));
     when(userEntityMapper.toEntity(user)).thenReturn(userEntity);
+    when(passwordEncoder.encode(user.getPassword())).thenReturn("admin");
 
     assertDoesNotThrow(() -> userAdapter.saveUser(user));
 
     verify(userRepository, times(1)).save(userEntity);
+    verify(userRepository, times(1)).findByEmail(user.getEmail());
+    verify(roleRepository, times(1)).findById(user.getRole().getId());
+    verify(passwordEncoder, times(1)).encode(user.getPassword());
+    verify(userEntityMapper, times(1)).toEntity(user);
   }
 
   @Test
