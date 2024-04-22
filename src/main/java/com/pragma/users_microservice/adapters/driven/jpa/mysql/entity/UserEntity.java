@@ -23,7 +23,7 @@ public class UserEntity {
   private String name;
   @Column(length = 20)
   private String lastName;
-  @Column(length = 20)
+  @Column(length = 20, unique = true)
   private String identification;
   @Column(length = 20)
   private String phoneNumber;

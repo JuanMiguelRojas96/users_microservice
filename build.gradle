@@ -29,8 +29,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'javax.validation:validation-api:2.0.1.Final'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'com.auth0:java-jwt:4.4.0'
 	compileOnly 'org.projectlombok:lombok'
-
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'

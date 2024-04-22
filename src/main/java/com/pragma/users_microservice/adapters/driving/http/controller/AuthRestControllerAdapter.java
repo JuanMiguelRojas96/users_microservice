@@ -1,9 +1,9 @@
 package com.pragma.users_microservice.adapters.driving.http.controller;
 
+import com.pragma.users_microservice.adapters.driven.jpa.mysql.adapter.UserDetailServiceImpl;
 import com.pragma.users_microservice.adapters.driving.http.dto.request.AddUserRequest;
 import com.pragma.users_microservice.adapters.driving.http.dto.request.AuthLoginRequest;
 import com.pragma.users_microservice.adapters.driving.http.dto.response.AuthResponse;
-import com.pragma.users_microservice.adapters.driven.jpa.mysql.adapter.UserDetailServiceImpl;
 import com.pragma.users_microservice.adapters.driving.http.mapper.IUserRequestMapper;
 import com.pragma.users_microservice.domain.api.IUserServicePort;
 import lombok.RequiredArgsConstructor;
@@ -16,20 +16,34 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @Validated
 @PreAuthorize("denyAll()")
-public class UserRestControllerAdapter {
+public class AuthRestControllerAdapter {
+
+  private final UserDetailServiceImpl userDetailServiceImpl;
   private final IUserServicePort userServicePort;
   private final IUserRequestMapper userRequestMapper;
 
 
-  @PostMapping("/")
-  @PreAuthorize("permitAll()")
+  @PostMapping("/register")
+  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   public ResponseEntity<Void> addUser(@Valid @RequestBody AddUserRequest request) {
     userServicePort.saveUser(userRequestMapper.addRequestToUser(request));
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
+  @PostMapping("/login")
+  @PreAuthorize("permitAll()")
+  public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthLoginRequest request) {
+    return ResponseEntity.ok(userDetailServiceImpl.login(request));
+
+  }
+
+  @GetMapping("/hello")
+  @PreAuthorize("hasAuthority('ROLE_TUTOR')")
+  public ResponseEntity<String> hello() {
+    return ResponseEntity.ok("hello");
+  }
 }

@@ -15,6 +15,7 @@ public class HttpsConstants {
   public static final String FIELD_EMAIL_NULL_MESSAGE = "Field 'email' cannot be null";
   public static final String FIELD_PASSWORD_NULL_MESSAGE = "Field 'password' cannot be null";
   public static final String FIELD_ROLE_NULL_MESSAGE = "Field 'role' cannot be null";
+  public static final String FIELD_USERNAME_NULL_MESSAGE = "Field 'username' cannot be null";
 
   //Fields Size
   public static final String FIELD_NAME_SIZE_MESSAGE = "Field 'name' cannot exceed the maximum number of characters (20) or less than 3";
