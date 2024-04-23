@@ -2,6 +2,7 @@ package com.pragma.users_microservice.configuration.exceptionhandler;
 
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.NoDataFoundException;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.RoleAlreadyExistsException;
+import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.RoleNoFoundException;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.UserAlreadyExistsException;
 import com.pragma.users_microservice.configuration.Constants;
 import lombok.RequiredArgsConstructor;
@@ -69,11 +70,18 @@ public class ControllerAdvisor {
         HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
   }
 
+  @ExceptionHandler(RoleNoFoundException.class)
+  public ResponseEntity<ExceptionResponse> handleRoleNoDataFoundException() {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
+        Constants.ROLE_NOT_FOUND_EXCEPTION_MESSAGE, HttpStatus.NOT_FOUND.toString(), LocalDateTime.now()));
+  }
+
+
+
   @ExceptionHandler(NoDataFoundException.class)
   public ResponseEntity<ExceptionResponse> handleNoDataFoundException() {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
         Constants.NO_DATA_FOUND_EXCEPTION_MESSAGE, HttpStatus.NOT_FOUND.toString(), LocalDateTime.now()));
   }
-
 
 }

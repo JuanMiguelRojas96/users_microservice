@@ -16,4 +16,9 @@ public class RoleUseCase implements IRoleServicePort {
   public void saveRole(Role role) {
     rolePersistencePort.saveRole(role);
   }
+
+  public String getRoleNameById(Long id){
+    return rolePersistencePort.getRoleNameById(id);
+  }
+
 }

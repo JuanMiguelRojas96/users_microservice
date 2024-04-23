@@ -1,5 +1,6 @@
 package com.pragma.users_microservice.adapters.security.service;
 
+import com.pragma.users_microservice.adapters.driven.jpa.mysql.adapter.UserDetailServiceImpl;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.entity.RoleEntity;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.entity.UserEntity;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.repository.IUserRepository;
@@ -22,7 +23,7 @@ class UserDetailServiceMySQLTest {
   @Mock
   private IUserRepository userRepository;
   @InjectMocks
-  private UserDetailServiceMySQL userDetailServiceMySQL;
+  private UserDetailServiceImpl userDetailServiceMySQL;
 
   @BeforeEach
   void setUp(){
