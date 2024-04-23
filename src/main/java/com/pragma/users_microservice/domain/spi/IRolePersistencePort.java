@@ -6,4 +6,6 @@ public interface IRolePersistencePort {
 
   void saveRole(Role role);
 
+  String getRoleNameById(Long id);
+
 }
