@@ -2,6 +2,7 @@ package com.pragma.users_microservice.adapters.driven.jpa.mysql.adapter;
 
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.entity.RoleEntity;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.RoleAlreadyExistsException;
+import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.RoleNoFoundException;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.mapper.IRoleEntityMapper;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.repository.IRoleRepository;
 import com.pragma.users_microservice.domain.model.Role;
@@ -53,6 +54,27 @@ class RoleAdapterTest {
     when(roleRepository.findByName(role.getName())).thenReturn(Optional.of(roleEntity));
 
     assertThrows(RoleAlreadyExistsException.class, () -> roleAdapter.saveRole(role));
+  }
+
+  @Test
+  void testGetRoleNameById_Successful() {
+    Role role = new Role(2L,"admin","admin");
+    RoleEntity roleEntity = new RoleEntity(2L,"admin","admin");
+
+    when(roleRepository.findById(role.getId())).thenReturn(Optional.of(roleEntity));
+
+    String roleName = roleAdapter.getRoleNameById(role.getId());
+
+    assertEquals("admin", roleName);
+  }
+
+  @Test
+  void testGetRoleNameById_RoleNoFoundException() {
+    Long roleId = 1L;
+
+    when(roleRepository.findById(roleId)).thenReturn(Optional.empty());
+
+    assertThrows(RoleNoFoundException.class, () -> roleAdapter.getRoleNameById(roleId));
   }
 
 

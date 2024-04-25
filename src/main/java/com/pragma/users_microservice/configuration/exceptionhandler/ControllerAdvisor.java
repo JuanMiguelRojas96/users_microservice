@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class ControllerAdvisor {
 
-  private String getErrorMessage(FieldError error) {
+  public String getErrorMessage(FieldError error) {
     if (error == null) {
       return "Validation error";
     }

@@ -1,6 +1,5 @@
 package com.pragma.users_microservice.adapters.driving.http.controller;
 
-import com.pragma.users_microservice.adapters.driven.jpa.mysql.adapter.RoleAdapter;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.adapter.UserDetailServiceImpl;
 import com.pragma.users_microservice.adapters.driving.http.dto.request.AddUserRequest;
 import com.pragma.users_microservice.adapters.driving.http.dto.request.AuthLoginRequest;
@@ -9,7 +8,6 @@ import com.pragma.users_microservice.adapters.driving.http.exceptions.RoleConsta
 import com.pragma.users_microservice.adapters.driving.http.mapper.IUserRequestMapper;
 import com.pragma.users_microservice.domain.api.IRoleServicePort;
 import com.pragma.users_microservice.domain.api.IUserServicePort;
-import com.pragma.users_microservice.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

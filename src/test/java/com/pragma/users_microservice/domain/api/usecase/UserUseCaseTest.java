@@ -35,5 +35,4 @@ class UserUseCaseTest {
 
     verify(userPersistencePort, times(1)).saveUser(user);
   }
-
 }
