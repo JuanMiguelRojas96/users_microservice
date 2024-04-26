@@ -12,6 +12,6 @@ public class AuthLoginRequest {
 
   @NotBlank(message = HttpsConstants.FIELD_EMAIL_NULL_MESSAGE)
   private final String username;
-  @NotBlank(message = HttpsConstants.FIELD_USERNAME_NULL_MESSAGE)
+  @NotBlank(message = HttpsConstants.FIELD_EMAIL_NULL_MESSAGE)
   private final String password;
 }

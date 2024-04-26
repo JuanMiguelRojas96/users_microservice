@@ -1,27 +1,34 @@
-package com.pragma.users_microservice.adapters.security.service;
+package com.pragma.users_microservice.adapters.driven.jpa.mysql.adapter;
 
-import com.pragma.users_microservice.adapters.driven.jpa.mysql.adapter.UserDetailServiceImpl;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.entity.RoleEntity;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.entity.UserEntity;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.repository.IUserRepository;
+import com.pragma.users_microservice.configuration.security.jwt.JwtUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-class UserDetailServiceMySQLTest {
+class UserDetailServiceImplTest {
 
   @Mock
   private IUserRepository userRepository;
+  @Mock
+  private PasswordEncoder passwordEncoder;
+  @Mock
+  private JwtUtils jwtUtils;
   @InjectMocks
   private UserDetailServiceImpl userDetailServiceMySQL;
 
@@ -68,5 +75,4 @@ class UserDetailServiceMySQLTest {
       userDetailServiceMySQL.loadUserByUsername(username);
     });
   }
-
 }
