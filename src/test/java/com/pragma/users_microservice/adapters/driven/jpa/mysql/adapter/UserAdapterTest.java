@@ -2,7 +2,7 @@ package com.pragma.users_microservice.adapters.driven.jpa.mysql.adapter;
 
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.entity.RoleEntity;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.entity.UserEntity;
-import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.NoDataFoundException;
+import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.RoleNoFoundException;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.exceptions.UserAlreadyExistsException;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.mapper.IUserEntityMapper;
 import com.pragma.users_microservice.adapters.driven.jpa.mysql.repository.IRoleRepository;
@@ -88,7 +88,7 @@ class UserAdapterTest {
 
     when(roleRepository.findById(user.getRole().getId())).thenReturn(Optional.empty());
 
-    assertThrows(NoDataFoundException.class, () -> userAdapter.saveUser(user));
+    assertThrows(RoleNoFoundException.class, () -> userAdapter.saveUser(user));
   }
 
 

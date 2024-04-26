@@ -139,14 +139,4 @@ class ControllerAdvisorTest {
     assertEquals(Constants.ROLE_NOT_FOUND_EXCEPTION_MESSAGE, responseEntity.getBody().getMessage());
   }
 
-  @Test
-  void testHandleNoDataFoundException() {
-    ResponseEntity<ExceptionResponse> responseEntity = controllerAdvisor.handleNoDataFoundException();
-
-    assertNotNull(responseEntity);
-    assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-    assertNotNull(responseEntity.getBody());
-    assertEquals(Constants.NO_DATA_FOUND_EXCEPTION_MESSAGE, responseEntity.getBody().getMessage());
-  }
-
 }
