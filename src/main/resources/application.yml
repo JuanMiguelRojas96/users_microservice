@@ -16,3 +16,8 @@ spring:
     jwt:
       private-key: ${private-key}
       user-generator: ${user-generator}
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
