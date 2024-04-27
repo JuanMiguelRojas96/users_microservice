@@ -8,6 +8,9 @@ import com.pragma.users_microservice.adapters.driving.http.exceptions.RoleConsta
 import com.pragma.users_microservice.adapters.driving.http.mapper.IUserRequestMapper;
 import com.pragma.users_microservice.domain.api.IRoleServicePort;
 import com.pragma.users_microservice.domain.api.IUserServicePort;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @Validated
 @PreAuthorize("denyAll()")
+@Tag(name = "Login and Register", description = "Endpoints for user authentication and register")
 public class AuthRestControllerAdapter {
 
   private final UserDetailServiceImpl userDetailServiceImpl;
@@ -33,6 +37,8 @@ public class AuthRestControllerAdapter {
 
   @PostMapping("/register")
   @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_TUTOR')")
+  @Operation(summary = "Allows registered users (admins or tutors) to add new users")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Void> addUser(@Valid @RequestBody AddUserRequest request, Authentication authentication) {
 
     String authenticatedUser = authentication.getAuthorities().iterator().next().getAuthority();
@@ -57,6 +63,7 @@ public class AuthRestControllerAdapter {
 
   @PostMapping("/login")
   @PreAuthorize("permitAll()")
+  @Operation(summary = "Endpoint for user login")
   public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthLoginRequest request) {
     return ResponseEntity.ok(userDetailServiceImpl.login(request));
 

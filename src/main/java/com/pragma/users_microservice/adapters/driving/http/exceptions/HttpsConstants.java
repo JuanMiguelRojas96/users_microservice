@@ -25,5 +25,6 @@ public class HttpsConstants {
   public static final String FIELD_PHONE_NUMBER_SIZE_MESSAGE = "Field 'phoneNumber' cannot exceed the maximum number of characters (20)";
   public static final String FIELD_PASSWORD_SIZE_MESSAGE = "Field 'password' cannot exceed the maximum number of characters (20)";
 
+  public static final String NOT_IS_A_EMAIL = "Not is a valid Email";
 
 }
